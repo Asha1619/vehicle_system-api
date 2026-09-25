@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Book Vehicle
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-md-8">
+
+        <div class="card">
+
+            <div class="card-body">
+
+                <h2 class="mb-4">
+                    Book a Vehicle
+                </h2>
+
+
+                {% if errors %}
+
+                <div class="alert alert-danger">
+
+                    <strong>
+                        Please fix the following:
+                    </strong>
+
+                    <ul class="mb-0">
+
+                        {% for field, messages in errors.items %}
+
+                            {% for message in messages %}
+
+                                <li>
+                                    {{ message }}
+                                </li>
+
+                            {% endfor %}
+
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+                {% endif %}
+
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Vehicle
+                        </label>
+
+                        <select
+                            name="vehicle"
+                            class="form-select"
+                            required>
+
+                            <option value="">
+                                Select Vehicle
+                            </option>
+
+                            {% for vehicle in vehicles %}
+
+                            <option
+                                value="{{ vehicle.id }}"
+                                {% if form_data.vehicle == vehicle.id|stringformat:"s" %}
+                                selected
+                                {% endif %}>
+
+                                {{ vehicle.name }}
+                                -
+                                {{ vehicle.brand }}
+                                -
+                                ₹{{ vehicle.price_per_day }}/day
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Customer Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="customer_name"
+                            class="form-control"
+                            value="{{ form_data.customer_name|default:'' }}"
+                            required>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Customer Phone
+                        </label>
+
+                        <input
+                            type="text"
+                            name="customer_phone"
+                            class="form-control"
+                            maxlength="10"
+                            value="{{ form_data.customer_phone|default:'' }}"
+                            placeholder="10 digit phone number"
+                            required>
+
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Start Date
+                                </label>
+
+                                <input
+                                    type="date"
+                                    name="start_date"
+                                    class="form-control"
+                                    value="{{ form_data.start_date|default:'' }}"
+                                    required>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    End Date
+                                </label>
+
+                                <input
+                                    type="date"
+                                    name="end_date"
+                                    class="form-control"
+                                    value="{{ form_data.end_date|default:'' }}"
+                                    required>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-success">
+
+                        Create Booking
+
+                    </button>
+
+
+                    <a
+                        href="{% url 'booking_list' %}"
+                        class="btn btn-secondary">
+
+                        Cancel
+
+                    </a>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

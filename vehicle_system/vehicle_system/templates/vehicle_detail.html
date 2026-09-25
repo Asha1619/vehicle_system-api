@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Vehicle Details
+{% endblock %}
+
+
+{% block content %}
+
+<div class="card">
+
+    <div class="card-body">
+
+        <h2>
+            {{ vehicle.name }}
+        </h2>
+
+        <hr>
+
+        <p>
+            <strong>Brand:</strong>
+            {{ vehicle.brand }}
+        </p>
+
+        <p>
+            <strong>Year:</strong>
+            {{ vehicle.year }}
+        </p>
+
+        <p>
+            <strong>Fuel Type:</strong>
+            {{ vehicle.fuel_type }}
+        </p>
+
+        <p>
+            <strong>Price per day:</strong>
+            ₹{{ vehicle.price_per_day }}
+        </p>
+
+
+        <p>
+            <strong>Status:</strong>
+
+            {% if vehicle.is_available %}
+
+                <span class="badge bg-success">
+                    Available
+                </span>
+
+            {% else %}
+
+                <span class="badge bg-danger">
+                    Unavailable
+                </span>
+
+            {% endif %}
+
+        </p>
+
+
+        <a
+            href="{% url 'vehicle_edit' vehicle.id %}"
+            class="btn btn-warning">
+
+            Edit
+
+        </a>
+
+
+        {% if vehicle.is_available %}
+
+        <a
+            href="{% url 'booking_create' %}"
+            class="btn btn-success">
+
+            Book This Vehicle
+
+        </a>
+
+        {% endif %}
+
+
+        <form
+            method="POST"
+            action="{% url 'vehicle_delete' vehicle.id %}"
+            class="d-inline">
+
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="btn btn-danger"
+                onclick="return confirm('Delete this vehicle?')">
+
+                Delete
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<h3 class="mt-5">
+    Booking History
+</h3>
+
+
+<table class="table table-bordered">
+
+    <thead>
+
+        <tr>
+            <th>Customer</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Total</th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        {% for booking in bookings %}
+
+        <tr>
+
+            <td>
+                {{ booking.customer_name }}
+            </td>
+
+            <td>
+                {{ booking.start_date }}
+            </td>
+
+            <td>
+                {{ booking.end_date }}
+            </td>
+
+            <td>
+                ₹{{ booking.total_amount }}
+            </td>
+
+        </tr>
+
+        {% empty %}
+
+        <tr>
+
+            <td colspan="4">
+                No bookings found.
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% endblock %}

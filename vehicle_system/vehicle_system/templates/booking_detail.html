@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Booking Details
+{% endblock %}
+
+
+{% block content %}
+
+<h2 class="mb-4">
+    Booking Details
+</h2>
+
+
+<div class="card">
+
+    <div class="card-body">
+
+        <h4>
+            Booking #{{ booking.id }}
+        </h4>
+
+        <hr>
+
+
+        <p>
+            <strong>Vehicle:</strong>
+
+            <a
+                href="{% url 'vehicle_detail' booking.vehicle.id %}">
+
+                {{ booking.vehicle.name }}
+
+            </a>
+
+        </p>
+
+
+        <p>
+            <strong>Brand:</strong>
+            {{ booking.vehicle.brand }}
+        </p>
+
+
+        <p>
+            <strong>Customer:</strong>
+            {{ booking.customer_name }}
+        </p>
+
+
+        <p>
+            <strong>Phone:</strong>
+            {{ booking.customer_phone }}
+        </p>
+
+
+        <p>
+            <strong>Start Date:</strong>
+            {{ booking.start_date }}
+        </p>
+
+
+        <p>
+            <strong>End Date:</strong>
+            {{ booking.end_date }}
+        </p>
+
+
+        <p>
+            <strong>Total Amount:</strong>
+
+            <span class="text-success">
+                ₹{{ booking.total_amount }}
+            </span>
+
+        </p>
+
+
+        <a
+            href="{% url 'booking_list' %}"
+            class="btn btn-secondary">
+
+            Back to Bookings
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
