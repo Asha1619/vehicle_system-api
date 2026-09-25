@@ -95,7 +95,7 @@ The APIs can be tested using Postman or Swagger.
 
 Screen Recording
 
-Video Link: <add-your-video-link>
+Video Link: https://drive.google.com/drive/folders/1h5pq54cc0D0hMHitUWGt5ApsTjc07ha7?usp=drive_link
 
 Deployment
 
